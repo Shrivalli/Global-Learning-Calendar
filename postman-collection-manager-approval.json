@@ -1,0 +1,281 @@
+{
+  "info": {
+    "name": "Global Learning Calendar - Manager Approval Workflow",
+    "description": "API collection for testing manager approval workflow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "1. Create Booking (Employee with Manager)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 2,\n  \"sessionId\": 1,\n  \"notes\": \"Looking forward to this training\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings"]
+            },
+            "description": "Creates a booking for an employee who has a manager. Status should be PENDING_APPROVAL."
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Pending Approvals for Manager",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/manager/1/pending-approvals",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", "manager", "1", "pending-approvals"]
+            },
+            "description": "Get all pending approval requests for manager with ID 1"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Manager Approves Booking",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/:bookingId/confirm?approvedById=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", ":bookingId", "confirm"],
+              "query": [
+                {
+                  "key": "approvedById",
+                  "value": "1"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Manager approves the booking. Replace :bookingId with actual booking ID."
+          },
+          "response": []
+        },
+        {
+          "name": "4. Manager Rejects Booking",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/:bookingId/reject?rejectedById=1&rejectionReason=Critical project deadline on that date",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", ":bookingId", "reject"],
+              "query": [
+                {
+                  "key": "rejectedById",
+                  "value": "1"
+                },
+                {
+                  "key": "rejectionReason",
+                  "value": "Critical project deadline on that date"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Manager rejects the booking with a reason. Replace :bookingId with actual booking ID."
+          },
+          "response": []
+        },
+        {
+          "name": "5. Get All Pending Approvals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/pending-approvals",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", "pending-approvals"]
+            },
+            "description": "Get all bookings in PENDING_APPROVAL status across all managers"
+          },
+          "response": []
+        },
+        {
+          "name": "6. Mark Manager Notified",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/:bookingId/notify-manager",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", ":bookingId", "notify-manager"],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Mark that manager has been notified about the booking request"
+          },
+          "response": []
+        },
+        {
+          "name": "7. Get Booking by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/:bookingId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", ":bookingId"],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get detailed information about a specific booking"
+          },
+          "response": []
+        },
+        {
+          "name": "8. Get Team Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/manager/:managerId/team",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", "manager", ":managerId", "team"],
+              "variable": [
+                {
+                  "key": "managerId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get all bookings for employees reporting to this manager"
+          },
+          "response": []
+        },
+        {
+          "name": "9. Get User Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/bookings/user/:userId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "bookings", "user", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            },
+            "description": "Get all bookings for a specific user (excluding cancelled)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users/:userId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "users", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "Get All Sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/sessions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "sessions"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
+
