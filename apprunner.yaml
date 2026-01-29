@@ -17,7 +17,6 @@ run:
   command: java $JAVA_OPTS -jar target/global-learning-calendar-1.0.0.jar
   network:
     port: 8080
-    env: SERVER_PORT
   env:
     - name: SERVER_PORT
       value: "8080"
@@ -31,12 +30,3 @@ run:
       value: "cognizant123"
     - name: JAVA_OPTS
       value: "-Xms512m -Xmx1024m -XX:+UseG1GC"
-
-# Health check configuration
-health-check:
-  protocol: http
-  path: /actuator/health
-  interval: 10
-  timeout: 5
-  healthy-threshold: 1
-  unhealthy-threshold: 5
