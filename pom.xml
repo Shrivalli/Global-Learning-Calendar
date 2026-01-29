@@ -18,7 +18,7 @@
     <description>Global Learning Calendar Application for managing learning programs</description>
     
     <properties>
-        <!-- Use Java 17 for compatibility with Lombok and Spring Boot 4.x -->
+        <!-- Use Java 11 for compatibility with Lombok and Spring Boot 4.x -->
         <java.version>11</java.version>
     </properties>
 
